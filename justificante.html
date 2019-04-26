@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Justificante</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <style media="screen">
+        body {
+
+            min-height: 100vh;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            align-items: center;
+
+            flex-direction: column;
+        }
+
+        #uploader {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 50%;
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <center>
+        <font face="arial,verdana">
+            <h2>Pasos: </h2>
+
+            <h3 style="
+    margin-top: 3px;     margin-bottom: 3px;
+">1.Selecciona el archivo de tu galeria</h3>
+            <h3 style="
+    margin-top: 3px;     margin-bottom: 3px;
+">2.Espera a que la barra este verde</h3>
+            <h3 style="
+    margin-top: 3px;     margin-bottom: 3px;
+">3.Listo!</h3>
+
+        </font>
+        <br> <br> <br> <br> <br> <br><br> <br> <br><br> <br> <br>
+        <progress value="0" max="100" id="uploader" style="
+    height: 30px;
+">0%</progress>
+        <input type="file" value="upload" id="fileButton" />
+
+    </center>
+
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDHgEzDiLQxz1vgEQPQEOq8UcOI_pqUayk",
+            authDomain: "bmghjgh.firebaseapp.com",
+            databaseURL: "https://bmghjgh.firebaseio.com",
+            projectId: "bmghjgh",
+            storageBucket: "bmghjgh.appspot.com",
+            messagingSenderId: "468705689592"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script>
+        // Obtener Elementos
+        var uploader = document.getElementById('uploader');
+        var fileButton = document.getElementById('fileButton');
+        // Vigilar selección archivo
+        fileButton.addEventListener('change', function(e) {
+            //Obtener archivo
+            var file = e.target.files[0];
+            // Crear un storage ref
+            var storageRef = firebase.storage().ref('mis_fotos/' + file.name);
+            // Subir archivo
+            var task = storageRef.put(file);
+            // Actualizar barra progreso
+            task.on('state_changed',
+                function progress(snapshot) {
+                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    uploader.value = percentage;
+                },
+                function error(err) {},
+                function complete() {}
+            )
+        });
+    </script>
+    <button class="boton6" onclick="location.href='opciones.html' ">Regresa</button>
+</body>
+
+</html>

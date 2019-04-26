@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Noticias</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+    <center>
+        <font face="arial,verdana">
+            <h2>Cargando..</h2>
+            <h2 id="holaMundo"> </h2>
+
+        </font>
+    </center>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDHgEzDiLQxz1vgEQPQEOq8UcOI_pqUayk",
+            authDomain: "bmghjgh.firebaseapp.com",
+            databaseURL: "https://bmghjgh.firebaseio.com",
+            projectId: "bmghjgh",
+            storageBucket: "bmghjgh.appspot.com",
+            messagingSenderId: "468705689592"
+        };
+        firebase.initializeApp(config);
+
+        var holaMundo = document.getElementById('holaMundo');
+        var dbRef = firebase.database().ref().child('text');
+        dbRef.on('value', snap => holaMundo.innerText = snap.val());
+    </script>
+    <center><br><br><br><br><br><br><br><br>
+        <img src="img/montana.svg" width="260" height="260">
+    </center>
+    <button class="boton4" onclick="location.href='opciones.html'">Comienza!</button>
+
+</body>
+</html>

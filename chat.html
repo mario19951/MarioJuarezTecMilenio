@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html lang="es">
+    
+   <head>
+<!-- Scripts jQuery, bootstrap -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+       
+       <!-- Estilos  bootstrap, chat-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/index.css" >
+
+      <!-- Area de código Firebase y lectura de Mensajes-->
+       <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+<script>
+  // Inicializar Firebase
+var config = {
+    apiKey: "AIzaSyDHgEzDiLQxz1vgEQPQEOq8UcOI_pqUayk",
+    authDomain: "bmghjgh.firebaseapp.com",
+    databaseURL: "https://bmghjgh.firebaseio.com",
+    projectId: "bmghjgh",
+    storageBucket: "bmghjgh.appspot.com",
+    messagingSenderId: "468705689592"
+  };
+  firebase.initializeApp(config);
+ 
+    //Variable con acceso a datos 
+    var TablaDeBaseDatos= firebase.database().ref('chat');
+    
+    TablaDeBaseDatos.limitToLast(20).on('value',function(snapshot){
+        
+         $(".chat").html(""); // Limpiamos todo el contenido del chat
+        
+        // Leer todos los mensajes en firebase
+        snapshot.forEach(function(e){
+            var objeto=e.val(); // Asignar todos los valores a un objeto
+            
+            // Validar datos nulos y agregar contenido en forma de lista etiqueta <li>
+             if((objeto.Mensaje!=null)&&(objeto.Nombre!=null)){
+                 
+                 // El siguiente contenido copia el contenido del template y luego lo inserta en el chat
+                 $( "#plantilla" ).clone().prependTo( ".chat" );
+                 $('.chat #plantilla').show(10);
+                 $('.chat #plantilla .Nombre').html(objeto.Nombre);
+                 $('.chat #plantilla .Mensaje').html(objeto.Mensaje);
+                 $('.chat #plantilla .Tiempo').html(objeto.Fecha);
+                 $('.chat #plantilla').attr("id","");
+             }
+            
+        });
+    });
+    
+</script>
+       
+   </head>
+   <body>
+       
+       <div class="container">
+          <div class="row">
+          <div class="col-md-12">
+              <br />
+                      
+                     <br />
+                    <br />
+             
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<div align="center">
+        <ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4331617637495482"
+     data-ad-slot="2764029251"></ins></div>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    <br>
+       
+   </div>
+          </div>
+    <div class="row">
+        <!-- inicio de la caja de chat con bootstrap -->
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span> Chat
+                    <div class="btn-group pull-right">
+                       
+                      
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="chat"> </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="Mensaje" type="text" class="form-control input-sm" placeholder="Escribe un mensaje..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btnEnviar" >
+                                Enviar</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  Fin de la caja de chat con bootstrap -->
+    </div>
+</div>
+  <!-- template del item del chat (Oculto: para agarrar un clon y llenarlo e insertar en el chat)-->
+       <li style="display:none" id="plantilla" class="left clearfix">
+           <span class="chat-img pull-left">
+             <img src="http://placehold.it/50/55C1E7/fff&text=U"class="img-circle" />
+           </span>
+            <div class="chat-body clearfix">
+                    <div class="header">
+                      <strong class="primary-font Nombre" >Jack Sparrow</strong> 
+                        <small class="pull-right text-muted">
+                        <span class="glyphicon glyphicon-asterisk Tiempo">
+                        </span> </small>
+                    </div>
+                        <p class="Mensaje">
+                               Mensaje
+                        </p>
+                </div>
+        </li>
+       
+       
+    <!-- Scripts de acción al botón -->
+      <script>
+       var Nombre= prompt("Nombre:");
+          
+       $('#btnEnviar').click(function(){
+           var formatofecha= new Date(); 
+           var d= formatofecha.getUTCDate();
+           var m= formatofecha.getMonth()+1;
+           var y= formatofecha.getFullYear();
+           var h=formatofecha.getHours();
+           var min= formatofecha.getMinutes();
+           
+           Fecha= d+"/"+m+"/"+y+" "+h+":"+min;
+           
+           TablaDeBaseDatos.push({
+               Nombre:Nombre,
+               Mensaje:$("#Mensaje").val(),
+               Fecha:Fecha
+            });
+           
+           
+       });
+       </script>
+      <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-74824848-1', 'auto');
+  ga('send', 'pageview');
+</script>
+       <button class="boton6" onclick="location.href='opciones.html' ">Regresa</button>
+   </body>
+</html>
